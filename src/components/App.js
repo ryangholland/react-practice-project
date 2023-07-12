@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Overview from "./Overview";
 
 class App extends Component {
   constructor() {
@@ -20,8 +21,12 @@ class App extends Component {
   }
 
   updateTasks() {
-    this.state.tasks.push(this.state.inputValue);
+    const newTask = {};
+    newTask.text = this.state.inputValue;
+    newTask.id = Math.random();
+    this.state.tasks.push(newTask);
     this.updateInput("");
+
     console.log(this.state.tasks);
   }
 
@@ -33,6 +38,7 @@ class App extends Component {
           onChange={(e) => this.updateInput(e.target.value)}
         ></input>
         <button onClick={this.updateTasks}>Submit</button>
+        <Overview tasks={this.state.tasks} />
       </>
     );
   }
