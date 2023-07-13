@@ -7,11 +7,18 @@ class Overview extends Component {
 
   render() {
     const { tasks } = this.props;
-    const listItems = tasks.map((task) => {
-      return <li key={task.id}>{task.text}</li>;
-    });
 
-    return <ul>{listItems}</ul>;
+    return (
+      <>
+        {tasks.map((task) => {
+          return (
+            <div key={task.id} className="task-div">
+              <h3>{task.text}</h3>
+            </div>
+          );
+        })}
+      </>
+    );
   }
 }
 

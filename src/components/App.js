@@ -51,9 +51,11 @@ class App extends Component {
         </form>
         <hr />
         <h2>Tasks In Progress</h2>
+        {tasks.length === 0 && <h4>There's nothing here!</h4>}
         <Overview tasks={tasks} />
         <hr />
         <h2>Completed Tasks</h2>
+        <h4>There's nothing here!</h4>
       </>
     );
   }
