@@ -15,6 +15,7 @@ class App extends Component {
 
     this.deleteTask = this.deleteTask.bind(this);
     this.completeTask = this.completeTask.bind(this);
+    this.changeEditMode = this.changeEditMode.bind(this);
   }
 
   updateInput = (e) => {
@@ -29,6 +30,7 @@ class App extends Component {
     const newTask = {
       text: this.state.inputValue,
       id: uniqid(),
+      editMode: false,
     };
 
     this.setState({
@@ -39,10 +41,12 @@ class App extends Component {
 
   deleteTask = (e) => {
     const newTasks = this.state.tasks.filter((task) => task.id !== e.target.id);
-    const newCompleted = this.state.completed.filter((task) => task.id !== e.target.id);
+    const newCompleted = this.state.completed.filter(
+      (task) => task.id !== e.target.id
+    );
     this.setState({
       tasks: newTasks,
-      completed: newCompleted
+      completed: newCompleted,
     });
   };
 
@@ -54,6 +58,17 @@ class App extends Component {
     this.setState({
       tasks: newTasks,
       completed: [...this.state.completed, completedTask],
+    });
+  };
+
+  changeEditMode = (e) => {
+    const newTasks = [...this.state.tasks];
+    newTasks.forEach((task) => {
+      if (task.id === e.target.id) task.editMode = !task.editMode;
+    });
+
+    this.setState({
+      tasks: newTasks,
     });
   };
 
@@ -74,12 +89,13 @@ class App extends Component {
           <button type="submit">Add Task</button>
         </form>
         <hr />
-        
+
         <Overview
           tasks={tasks}
           completed={completed}
           deleteTask={this.deleteTask}
           completeTask={this.completeTask}
+          changeEditMode={this.changeEditMode}
         />
       </>
     );
