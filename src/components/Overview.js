@@ -14,6 +14,11 @@ class Overview extends Component {
           return (
             <div key={task.id} className="task-div">
               <h3>{task.text}</h3>
+              <div className="task-buttons-div">
+                <button>Edit</button>
+                <button>Complete</button>
+                <button>Delete</button>
+              </div>
             </div>
           );
         })}
