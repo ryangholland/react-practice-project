@@ -10,9 +10,11 @@ class App extends Component {
     this.state = {
       inputValue: "",
       tasks: [],
+      completed: [],
     };
 
     this.deleteTask = this.deleteTask.bind(this);
+    this.completeTask = this.completeTask.bind(this);
   }
 
   updateInput = (e) => {
@@ -37,13 +39,26 @@ class App extends Component {
 
   deleteTask = (e) => {
     const newTasks = this.state.tasks.filter((task) => task.id !== e.target.id);
+    const newCompleted = this.state.completed.filter((task) => task.id !== e.target.id);
     this.setState({
       tasks: newTasks,
+      completed: newCompleted
+    });
+  };
+
+  completeTask = (e) => {
+    const completedTask = this.state.tasks.find(
+      (task) => task.id === e.target.id
+    );
+    const newTasks = this.state.tasks.filter((task) => task.id !== e.target.id);
+    this.setState({
+      tasks: newTasks,
+      completed: [...this.state.completed, completedTask],
     });
   };
 
   render() {
-    const { inputValue, tasks } = this.state;
+    const { inputValue, tasks, completed } = this.state;
 
     return (
       <>
@@ -59,12 +74,13 @@ class App extends Component {
           <button type="submit">Add Task</button>
         </form>
         <hr />
-        <h2>Tasks In Progress</h2>
-        {tasks.length === 0 && <h4>There's nothing here!</h4>}
-        <Overview tasks={tasks} deleteTask={this.deleteTask} />
-        <hr />
-        <h2>Completed Tasks</h2>
-        <h4>There's nothing here!</h4>
+        
+        <Overview
+          tasks={tasks}
+          completed={completed}
+          deleteTask={this.deleteTask}
+          completeTask={this.completeTask}
+        />
       </>
     );
   }
