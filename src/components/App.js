@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import uniqid from "uniqid";
 import Overview from "./Overview";
 
 class App extends Component {
@@ -7,38 +8,46 @@ class App extends Component {
 
     this.state = {
       inputValue: "",
-      tasks: []
+      tasks: [],
+    };
+  }
+
+  updateInput = (e) => {
+    this.setState({
+      inputValue: e.target.value,
+    });
+  };
+
+  updateTasks = (e) => {
+    e.preventDefault();
+
+    const newTask = {
+      text: this.state.inputValue,
+      id: uniqid(),
     };
 
-    this.updateInput = this.updateInput.bind(this);
-    this.updateTasks = this.updateTasks.bind(this);
-  }
-
-  updateInput(text) {
     this.setState({
-      inputValue: text,
+      inputValue: "",
+      tasks: [...this.state.tasks, newTask],
     });
-  }
-
-  updateTasks() {
-    const newTask = {};
-    newTask.text = this.state.inputValue;
-    newTask.id = Math.random();
-    this.state.tasks.push(newTask);
-    this.updateInput("");
-
-    console.log(this.state.tasks);
-  }
+  };
 
   render() {
+    const { inputValue, tasks } = this.state;
+
     return (
       <>
-        <input
-          value={this.state.inputValue}
-          onChange={(e) => this.updateInput(e.target.value)}
-        ></input>
-        <button onClick={this.updateTasks}>Submit</button>
-        <Overview tasks={this.state.tasks} />
+        <form onSubmit={this.updateTasks}>
+          <label htmlFor="taskInput">Enter task:</label>
+          <input
+            value={inputValue}
+            onChange={this.updateInput}
+            type="text"
+            id="taskInput"
+          ></input>
+          <button type="submit">Add Task</button>
+          <Overview tasks={tasks} />
+        </form>
       </>
     );
   }
