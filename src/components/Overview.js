@@ -12,8 +12,14 @@ class Overview extends Component {
           if (task.editMode) {
             return (
               <div key={task.id} className="task-div">
-                <input defaultValue={task.text}></input>
-                <div>Edit Mode On</div>
+                <form
+                  className="edit-form"
+                  id={task.id}
+                  onSubmit={this.props.saveEdit}
+                >
+                  <input id={task.id} defaultValue={task.text}></input>
+                  <button type="submit">Save Changes</button>
+                </form>
               </div>
             );
           } else {

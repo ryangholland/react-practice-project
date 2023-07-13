@@ -16,6 +16,7 @@ class App extends Component {
     this.deleteTask = this.deleteTask.bind(this);
     this.completeTask = this.completeTask.bind(this);
     this.changeEditMode = this.changeEditMode.bind(this);
+    this.saveEdit = this.saveEdit.bind(this);
   }
 
   updateInput = (e) => {
@@ -72,13 +73,30 @@ class App extends Component {
     });
   };
 
+  saveEdit = (e) => {
+    e.preventDefault();
+    console.log(e.target.id); // Task ID that needs changed
+    console.log(e.target.firstChild.value); // The new value
+
+    const newTasks = this.state.tasks.filter((task) => task.id !== e.target.id);
+    const updatedTask = this.state.tasks.find(
+      (task) => task.id === e.target.id
+    );
+    updatedTask.text = e.target.firstChild.value;
+    updatedTask.editMode = false;
+
+    this.setState({
+      tasks: [...newTasks, updatedTask]
+    })
+  };
+
   render() {
     const { inputValue, tasks, completed } = this.state;
 
     return (
       <>
         <h1>ReacToDo</h1>
-        <form onSubmit={this.updateTasks}>
+        <form className="enter-task-form" onSubmit={this.updateTasks}>
           <label htmlFor="taskInput">Enter task:</label>
           <input
             value={inputValue}
@@ -96,6 +114,7 @@ class App extends Component {
           deleteTask={this.deleteTask}
           completeTask={this.completeTask}
           changeEditMode={this.changeEditMode}
+          saveEdit={this.saveEdit}
         />
       </>
     );
