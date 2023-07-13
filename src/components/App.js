@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import uniqid from "uniqid";
 import Overview from "./Overview";
+import "../style.css";
 
 class App extends Component {
   constructor() {
@@ -37,6 +38,7 @@ class App extends Component {
 
     return (
       <>
+        <h1>ReacToDo</h1>
         <form onSubmit={this.updateTasks}>
           <label htmlFor="taskInput">Enter task:</label>
           <input
@@ -46,8 +48,12 @@ class App extends Component {
             id="taskInput"
           ></input>
           <button type="submit">Add Task</button>
-          <Overview tasks={tasks} />
         </form>
+        <hr />
+        <h2>Tasks In Progress</h2>
+        <Overview tasks={tasks} />
+        <hr />
+        <h2>Completed Tasks</h2>
       </>
     );
   }
