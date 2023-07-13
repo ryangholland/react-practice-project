@@ -82,11 +82,13 @@ class App extends Component {
     const updatedTask = this.state.tasks.find(
       (task) => task.id === e.target.id
     );
+    console.log(this.state.tasks.indexOf(updatedTask)) // Task should be spliced in to this index to maintain position
     updatedTask.text = e.target.firstChild.value;
     updatedTask.editMode = false;
+    newTasks.splice(this.state.tasks.indexOf(updatedTask), 0, updatedTask)
 
     this.setState({
-      tasks: [...newTasks, updatedTask]
+      tasks: [...newTasks]
     })
   };
 
