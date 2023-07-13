@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 
 class Overview extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { tasks } = this.props;
 
@@ -17,7 +13,7 @@ class Overview extends Component {
               <div className="task-buttons-div">
                 <button>Edit</button>
                 <button>Complete</button>
-                <button>Delete</button>
+                <button id={task.id} onClick={this.props.deleteTask}>Delete</button>
               </div>
             </div>
           );

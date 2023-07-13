@@ -11,6 +11,8 @@ class App extends Component {
       inputValue: "",
       tasks: [],
     };
+
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   updateInput = (e) => {
@@ -33,6 +35,13 @@ class App extends Component {
     });
   };
 
+  deleteTask = (e) => {
+    const newTasks = this.state.tasks.filter((task) => task.id !== e.target.id);
+    this.setState({
+      tasks: newTasks,
+    });
+  };
+
   render() {
     const { inputValue, tasks } = this.state;
 
@@ -52,7 +61,7 @@ class App extends Component {
         <hr />
         <h2>Tasks In Progress</h2>
         {tasks.length === 0 && <h4>There's nothing here!</h4>}
-        <Overview tasks={tasks} />
+        <Overview tasks={tasks} deleteTask={this.deleteTask} />
         <hr />
         <h2>Completed Tasks</h2>
         <h4>There's nothing here!</h4>
